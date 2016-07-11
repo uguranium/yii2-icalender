@@ -1,0 +1,28 @@
+{
+  // package name
+  "name": "uguranyum/yii2-icalender",
+
+  // package type
+  "type": "yii2-extension",
+
+  "description": "iCalender for the Yii framework",
+  "keywords": ["yii2", "calender", "icalender"],
+  "license": "BSD-3-Clause",
+  "support": {
+    "issues": "https://github.com/uguranyum/yii2-icalender/issues",
+    "wiki"  : "https://github.com/uguranyum/yii2-icalender/wiki",
+    "source": "https://github.com/uguranyum/yii2-icalender"
+  },
+  "authors": [
+    {
+      "name": "Ugur CELIK",
+      "email": "uguranyum@yandex.com"
+    }
+  ],
+
+  // package dependencies
+  "require": {
+    "yiisoft/yii2": "*"
+  }
+
+}
