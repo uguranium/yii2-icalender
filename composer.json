@@ -18,6 +18,7 @@
     }
   ],
 
+  "minimum-stability": "stable",
   "require": {
     "yiisoft/yii2": "*"
   },
@@ -26,9 +27,5 @@
     "psr-4": {
       "uguranyum\\icalender\\": ""
     }
-  },
-
-  "minimum-stability" : "dev",
-  "prefer-stable" : true
-
+  }
 }
