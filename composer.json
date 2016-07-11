@@ -1,8 +1,5 @@
 {
-  // package name
   "name": "uguranyum/yii2-icalender",
-
-  // package type 
   "type": "yii2-extension",
 
   "description": "iCalender for the Yii framework",
