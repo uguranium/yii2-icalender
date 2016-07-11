@@ -10,6 +10,7 @@
     "wiki"  : "https://github.com/uguranyum/yii2-icalender/wiki",
     "source": "https://github.com/uguranyum/yii2-icalender"
   },
+
   "authors": [
     {
       "name": "Ugur CELIK",
@@ -17,7 +18,6 @@
     }
   ],
 
-  // package dependencies
   "require": {
     "yiisoft/yii2": "*"
   }
