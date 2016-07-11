@@ -18,12 +18,9 @@
     }
   ],
 
-  "repositories": [
-    {
-      "type": "vcs",
-      "url" : "https://github.com/uguranyum/yii2-icalender"
-    }
-  ],
+  "require": {
+    "yiisoft/yii2": "*"
+  },
 
   "autoload": {
     "psr-4": {
