@@ -20,6 +20,12 @@
 
   "require": {
     "yiisoft/yii2": "*"
+  },
+
+  "autoload": {
+    "psr-4": {
+      "uguranyum\\icalender\\": ""
+    }
   }
 
 }
