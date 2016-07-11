@@ -20,7 +20,8 @@
 
   "minimum-stability": "stable",
   "require": {
-    "yiisoft/yii2": "*"
+    "yiisoft/yii2": "*",
+    "uguranyum/yii2-icalender": "@dev"
   },
 
   "autoload": {
