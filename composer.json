@@ -1,23 +1,19 @@
 {
   "name": "uguranyum/yii2-icalender",
-  "type": "yii2-extension",
-
-  "description": "iCalender for the Yii framework",
-  "keywords": ["yii2", "calender", "icalender"],
-  "license": "BSD-3-Clause",
-  "support": {
-    "issues": "https://github.com/uguranyum/yii2-icalender/issues",
-    "wiki"  : "https://github.com/uguranyum/yii2-icalender/wiki",
-    "source": "https://github.com/uguranyum/yii2-icalender"
-  },
-
+  "description": "iCalender for the Yii framework!",
+  "keywords": [
+    "numbers",
+    "currency",
+    "spell"
+  ],
+  "type": "extension",
+  "license": "MIT",
   "authors": [
     {
-      "name": "Ugur CELIK",
+      "name": "Ugur",
       "email": "uguranyum@yandex.com"
     }
   ],
-
   "autoload": {
     "psr-4": {
       "uguranyum\\icalender\\": ""
