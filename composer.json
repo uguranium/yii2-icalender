@@ -19,13 +19,15 @@
   ],
 
   "require": {
-    "yiisoft/yii2": "*@dev"
+    "yiisoft/yii2": "*"
   },
 
   "autoload": {
     "psr-4": {
       "uguranyum\\icalender\\": ""
     }
-  }
+  },
+
+  "minimum-stability": "stable"
 
 }
