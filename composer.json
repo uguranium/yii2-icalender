@@ -1,5 +1,6 @@
 {
   "name": "uguranyum/yii2-icalender",
+  "version": "1.0.0",
   "type": "yii2-extension",
 
   "description": "iCalender for the Yii framework",
