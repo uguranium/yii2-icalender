@@ -18,10 +18,15 @@
     }
   ],
 
-  "minimum-stability": "stable",
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/uguranyum/yii2-icalender/"
+    }
+  ],
+
   "require": {
-    "yiisoft/yii2": "*",
-    "uguranyum/yii2-icalender": "@dev"
+    "yiisoft/yii2": "*"
   },
 
   "autoload": {
