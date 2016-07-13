@@ -41,11 +41,9 @@ class iCalender{
         $this->vendorurl        =  Yii::getAlias('@vendor').'/uguranyum/yii2-icalender/';
         $this->vendortempurl    =  Yii::getAlias('@vendor').'/uguranyum/yii2-icalender/temp/';
 
-
         $result     = $this->run($url);
         $readfile   = $this->lookFile($result);
         $insertfile = $this->insertDatabase($readfile);
-        print_r($readfile);
     }
 
     public function run($url){
@@ -53,6 +51,14 @@ class iCalender{
         if ($curl == false)
             return 'Can not find the file';
         return $curl;
+    }
+
+    public function cleanTemp(){
+        $files = glob($this->vendortempurl.'*');
+        foreach($files as $file){
+            if(is_file($file))
+                unlink($file);
+        }
     }
 
     public function saveFile($url){
@@ -280,9 +286,35 @@ class iCalender{
     public function insertDatabase($readfile){
         foreach($readfile as $calender_keys => $calender_values){
             if($calender_keys == 'VCALENDAR'){ //foreach($calender_values as $vcal_ley => $vcal_value)
-                $readfile['created_at'] = date("Y-m-d H:i:s");
-                Yii::$app->db->createCommand()->insert('icalender_main',$readfile['VCALENDAR'])->execute();
+                $icalender_main['created_at']   = date("Y-m-d H:i:s");
+                $icalender_main['METHOD']       = $readfile['VCALENDAR']['METHOD'];
+                $icalender_main['VERSION']      = $readfile['VCALENDAR']['VERSION'];
+                $icalender_main['PRODID']       = $readfile['VCALENDAR']['PRODID'];
+                $icalender_main['X-WR-CALNAME'] = $readfile['VCALENDAR']['X-WR-CALNAME'];
+                $icalender_main['X-WR-TIMEZONE']= $readfile['VCALENDAR']['X-WR-TIMEZONE'];
+                $icalender_main['CALSCALE']     = $readfile['VCALENDAR']['CALSCALE'];
+                $icalender_main['PREFERRED_LANGUAGE'] = $readfile['VCALENDAR']['PREFERRED_LANGUAGE'];
+
+                Yii::$app->db->createCommand()->insert('icalender_main',$icalender_main)->execute();
+                $id_calender_mail = Yii::$app->db->getLastInsertID();
             }
+            if($calender_keys == 'VEVENT'){
+                foreach($calender_values as $events){
+                    $icalender_event['icalender_id']    = $id_calender_mail;
+                    $icalender_event['UID']             = $events['UID'];
+                    $icalender_event['DTSTART']         = $events['DTSTART'];
+                    $icalender_event['DTEND']           = $events['DTEND'];
+                    $icalender_event['SUMMARY']         = $events['SUMMARY'];
+
+                    foreach($events as $event_key => $value)
+                        if(count(explode('RESOURCES',$event_key)) > 1)
+                            $icalender_event['RESOURCES']   = $value;
+
+
+                    Yii::$app->db->createCommand()->insert('icalender_event',$icalender_event)->execute();
+                }
+            }
+
         }
     }
 
