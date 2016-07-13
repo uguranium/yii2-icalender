@@ -284,16 +284,21 @@ class iCalender{
     }
 
     public function insertDatabase($readfile){
-        foreach($readfile as $calender_keys => $calender_values){
+        $readfile['VCALENDAR']['METHOD'] = 'iCalExtension';
+
+        $fixed_readfile['VCALENDAR'] = $readfile['VCALENDAR'];
+        $fixed_readfile['VEVENT']    = $readfile['VEVENT'];
+
+        foreach($fixed_readfile as $calender_keys => $calender_values){
             if($calender_keys == 'VCALENDAR'){ //foreach($calender_values as $vcal_ley => $vcal_value)
                 $icalender_main['created_at']   = date("Y-m-d H:i:s");
-                $icalender_main['METHOD']       = $readfile['VCALENDAR']['METHOD'];
-                $icalender_main['VERSION']      = $readfile['VCALENDAR']['VERSION'];
-                $icalender_main['PRODID']       = $readfile['VCALENDAR']['PRODID'];
-                $icalender_main['X-WR-CALNAME'] = $readfile['VCALENDAR']['X-WR-CALNAME'];
-                $icalender_main['X-WR-TIMEZONE']= $readfile['VCALENDAR']['X-WR-TIMEZONE'];
-                $icalender_main['CALSCALE']     = $readfile['VCALENDAR']['CALSCALE'];
-                $icalender_main['PREFERRED_LANGUAGE'] = $readfile['VCALENDAR']['PREFERRED_LANGUAGE'];
+                $icalender_main['METHOD']       = $fixed_readfile['VCALENDAR']['METHOD'];
+                $icalender_main['VERSION']      = @$fixed_readfile['VCALENDAR']['VERSION'];
+                $icalender_main['PRODID']       = @$fixed_readfile['VCALENDAR']['PRODID'];
+                $icalender_main['X-WR-CALNAME'] = @$fixed_readfile['VCALENDAR']['X-WR-CALNAME'];
+                $icalender_main['X-WR-TIMEZONE']= @$fixed_readfile['VCALENDAR']['X-WR-TIMEZONE'];
+                $icalender_main['CALSCALE']     = @$fixed_readfile['VCALENDAR']['CALSCALE'];
+                $icalender_main['PREFERRED_LANGUAGE'] = @$fixed_readfile['VCALENDAR']['PREFERRED_LANGUAGE'];
 
                 Yii::$app->db->createCommand()->insert('icalender_main',$icalender_main)->execute();
                 $id_calender_mail = Yii::$app->db->getLastInsertID();
@@ -301,15 +306,18 @@ class iCalender{
             if($calender_keys == 'VEVENT'){
                 foreach($calender_values as $events){
                     $icalender_event['icalender_id']    = $id_calender_mail;
-                    $icalender_event['UID']             = $events['UID'];
-                    $icalender_event['DTSTART']         = $events['DTSTART'];
-                    $icalender_event['DTEND']           = $events['DTEND'];
-                    $icalender_event['SUMMARY']         = $events['SUMMARY'];
+                    $icalender_event['UID']             = @$events['UID'];
 
-                    foreach($events as $event_key => $value)
+                    foreach($events as $event_key => $value){
                         if(count(explode('RESOURCES',$event_key)) > 1)
                             $icalender_event['RESOURCES']   = $value;
-
+                        if(count(explode('DTSTART',$event_key)) > 1)
+                            $icalender_event['DTSTART']     = $value;
+                        if(count(explode('DTEND',$event_key)) > 1)
+                            $icalender_event['DTEND']       = $value;
+                        if(count(explode('SUMMARY',$event_key)) > 1 or count(explode('DESCRIPTION',$event_key)) > 1)
+                            $icalender_event['SUMMARY']     = $value;
+                    }
 
                     Yii::$app->db->createCommand()->insert('icalender_event',$icalender_event)->execute();
                 }
