@@ -33,6 +33,10 @@ class iCalender{
     * Temprary document url
     */
     public $temp_dir = '';
+    /*
+    *  Calender Main ID
+    */
+    public $id_calender_main = '';
 
     /*
      * Lets Start
@@ -314,11 +318,11 @@ class iCalender{
                 $icalender_main['PREFERRED_LANGUAGE'] = @$fixed_readfile['VCALENDAR']['PREFERRED_LANGUAGE'];
 
                 Yii::$app->db->createCommand()->insert('icalender_main',$icalender_main)->execute();
-                $id_calender_mail = Yii::$app->db->getLastInsertID();
+                $this->id_calender_main = Yii::$app->db->getLastInsertID();
             }
             if($calender_keys == 'VEVENT'){
                 foreach($calender_values as $events){
-                    $icalender_event['icalender_id']    = $id_calender_mail;
+                    $icalender_event['icalender_id']    = $this->id_calender_main;
                     $icalender_event['UID']             = @$events['UID'];
 
                     foreach($events as $event_key => $value){
