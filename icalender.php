@@ -62,16 +62,29 @@ class iCalender{
     }
 
     public function saveFile($url){
-        if(!@file_get_contents($url))
+        $options = array(
+            'http'=>array(
+                'method'=>"GET",
+                'header'=>"Accept-language: en\r\n" .
+                    "Cookie: foo=bar\r\n" .
+                    "User-Agent: Mozilla/5.0 (iPad; U; CPU OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Version/4.0.4 Mobile/7B334b Safari/531.21.102011-10-16 20:23:10\r\n" // i.e. An iPad
+            )
+        );
+
+        $context = stream_context_create($options);
+
+        if(! $calender =@file_get_contents($url, false, $context))
             return false;
 
         $url_path   = explode('/',$url);
         $doc_ext    = count($url_path)-1;
-        $new_path   = $this->vendortempurl.'/'.time().'_'.$url_path[$doc_ext];
+        $new_path   = $this->vendortempurl.time().'_'.$url_path[$doc_ext];
+        $new_path   = explode('?',$new_path);
+        $new_path   = $new_path[0];
 
         $this->temp_dir   = $new_path;
 
-        file_put_contents($new_path, file_get_contents($url));
+        file_put_contents($new_path, $calender);
         return $new_path;
     }
 
