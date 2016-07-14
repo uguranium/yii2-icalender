@@ -343,4 +343,9 @@ class iCalender{
         }
     }
 
+    public function cleanTables(){
+        Yii::$app->db->createCommand()->truncateTable('icalender_event')->execute();
+        Yii::$app->db->createCommand()->truncateTable('icalender_main')->execute();
+    }
+
 }

@@ -40,5 +40,6 @@ $url        = 'http://ical.mac.com/ical/South32Korean32Holidays.ics';
 $icalender  = new iCalender($url);
 $icalender->cleanTemp();        //Clean the temp directory.
 $icalender->id_calender_main    //Main Calender ID
+$icalender->cleanTables();      //Turnicate the iCalender Tables
 ```
 
